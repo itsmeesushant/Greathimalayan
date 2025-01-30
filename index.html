@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Great Himalayan Travels and Tours</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+  <style>
+    /* Basic styles for layout and responsiveness */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: url('header-background.jpg') no-repeat center center;
+      background-size: cover;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .logo-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      height: 100px;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin: 0;
+    }
+    /* Styling for the contact info bar */
+    .contact-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(240, 240, 240, 0.5); /* Gray background with transparency */
+      padding: 10px;
+      font-family: Arial, sans-serif;
+      border-bottom: 2px solid rgba(204, 204, 204, 0.5); /* Semi-transparent border */
+    }
+
+    .contact-bar div {
+      display: flex;
+      align-items: center;
+      margin-right: 20px; /* Space between each contact info */
+    }
+
+    .contact-bar div:last-child {
+      margin-right: 0; /* No margin on the last item */
+    }
+
+    /* Icons */
+    .contact-bar i {
+      margin-right: 8px;
+      font-size: 16px;
+      color: #007BFF;
+    }
+
+    /* Bold and colored text */
+    .contact-bar span {
+      font-weight: bold;
+      color: #000;
+    }
+
+    /* Media query for mobile responsiveness */
+    @media (max-width: 768px) {
+      .contact-bar {
+        flex-wrap: wrap; /* Wrap the content on smaller screens */
+        text-align: center;
+      }
+
+      .contact-bar div {
+        margin-bottom: 10px;
+      }
+
+      .contact-bar div:last-child {
+        margin-bottom: 0;
+      }
+    }
+    /* Navigation Bar */
+    .hamburger {
+      display: block;
+      cursor: pointer;
+      width: 25px;
+      height: 20px;
+      position: absolute;
+      top: 15px;
+      right: 15px;
+    }
+
+    .hamburger div {
+      width: 100%;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+      transition: 0.4s;
+    }
+
+    /* Navigation menu (hidden by default) */
+    .nav-menu {
+      display: none;
+      flex-direction: column;
+      background-color: #007BFF;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 200px;
+    }
+
+    .nav-menu ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-menu ul li {
+      margin: 0;
+      border-bottom: 1px solid white;
+    }
+
+    .nav-menu ul li a {
+      display: block;
+      padding: 10px;
+      text-align: center;
+      text-decoration: none;
+      color: white;
+      background-color: #007BFF;
+    }
+
+    .nav-menu ul li a:hover {
+      background-color: #0056b3;
+    }
+
+    /* Active state for the nav menu */
+    .nav-menu.active {
+      display: flex;
+    }
+    /* Change hamburger icon to X when active */
+    .hamburger.active div:nth-child(1) {
+      transform: rotate(-45deg) translate(-5px, 5px);
+    }
+
+    .hamburger.active div:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active div:nth-child(3) {
+      transform: rotate(45deg) translate(-5px, -5px);
+    }
+
+    /* Media query to hide hamburger on larger screens */
+    @media (min-width: 768px) {
+      .hamburger {
+        display: none;
+      }
+      .nav-menu {
+        display: flex;
+        position: static;
+        flex-direction: row;
+        width: auto;
+      }
+    }
+    .hero {
+      position: relative;
+      height: 400px;
+      overflow: hidden;
+    }
+
+    .swiper-container {
+      width: 100%;
+      height: 100%;
+    }
+
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+
+    .swiper-slide img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .cta-button {
+      display: block;
+      background-color: #ff4500;
+      color: white;
+      text-align: center;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+
+    section {
+      padding: 20px;
+      color: white;
+    }
+
+    #destinations {
+      background: url('common-background.jpg') no-repeat center center;
+      background-size: cover;
+    }
+
+    #about, #contact {
+      background: url('nepal.jpg') no-repeat center center;
+      background-size: cover;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    /* Container for destination items */
+    .destination-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    /* Individual destination item */
+    .destination {
+      flex: 1 1 calc(33.333% - 20px);
+      max-width: calc(33.333% - 20px);
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Destination image */
+    .destination img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    /* Destination text */
+    .destination h3 {
+      margin: 10px;
+      font-size: 1.2em;
+      color: Blue;
+    }
+
+    .destination p {
+      margin: 0 10px 10px;
+      color: black;
+    }
+
+    #about h2, #contact h2 {
+      margin: 10px;
+      font-size: 1.5em;
+      color: White;
+    }
+
+    #about p, #contact p, {
+      color: White;
+    }
+    #feedback p {
+      color: Blue;
+    }
+    #contact {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    ..contact-form {
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #333;
+      max-width: 600px;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 0 auto;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .submit-button {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .submit-button:hover {
+      background-color: #218838;
+    }
+
+    /* Confirmation Message Styling */
+    #confirmation-message {
+      display: none; /* Initially hidden */
+      background-color: #e9f7ef;
+      color: #155724;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 8px;
+      border: 1px solid #c3e6cb;
+      text-align: center;
+    }
+    .feedback {
+      max-width: 400px;
+      background: rgba(255, 255, 255, 0.9);
+      color: blue;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .feedback h3 {
+      margin-top: 0;
+    }
+
+    #feedback p {
+      color: black;
+    }
+
+    footer {
+      background-color: #333;
+      color: blue;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    .social-media a {
+      color: #ff4500;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    #map {
+      height: 300px;
+      width: 100%;
+    }
+    #about h2 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #Blue;
+      font-weight: bold;
+    }
+
+    #about .about-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    #about .about-text {
+      font-size: 1.5em;
+      line-height: 1.8em;
+      color: #555;
+      max-width: 800px;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    #about img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin-top: 30px;
+    }
+
+    /* Highlighted about details */
+    .about-highlights {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .highlight-item {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 10px;
+      flex: 1 1 30%;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .highlight-item h3 {
+      font-size: 1.5em;
+      color: #007BFF;
+      margin-bottom: 15px;
+    }
+
+    .highlight-item p {
+      font-size: 1em;
+      color: #666;
+    }
+
+    /* Media Queries for responsive design */
+    @media (max-width: 768px) {
+      #about {
+        padding: 30px 15px;
+      }
+
+      #about h2 {
+        font-size: 2em;
+      }
+
+      #about .about-text {
+        font-size: 1.1em;
+        max-width: 100%;
+      }
+
+      .highlight-item {
+        flex: 1 1 100%;
+      }
+    }
+
+    /* Media queries for responsive design */
+    @media (max-width: 768px) {
+      .logo-container {
+        flex-direction: column;
+      }
+
+      .destination {
+        flex: 1 1 100%;
+        max-width: 100%;
+      }
+
+      .hamburger {
+        display: flex;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        z-index: 10;
+      }
+
+      .nav-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
+        height: auto;
+        background-color: #007BFF;
+        z-index: 9;
+        border-radius: 5px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .nav-menu.active {
+        display: flex;
+      }
+
+      .nav-menu ul {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .nav-menu ul li {
+        margin: 10px 0;
+      }
+
+      .nav-menu ul li a {
+        padding: 10px 15px;
+        width: 100%;
+        text-align: center;
+      }
+
+      .hero {
+        height: 300px;
+      }
+
+      .contact-form, .feedback {
+        max-width: 100%;
+      }
+
+      h1 {
+        font-size: 1.5em;
+      }
+
+      .cta-button {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="logo-left.jpg" alt="Great Himalayan Travels and Tours" class="logo">
+      <img src="logo-right.png" alt="Great Himalayan Travels and Tours" class="logo">
+    </div>
+    <div class="hamburger" id="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="contact-bar">
+  <div>
+    <i class="fas fa-phone-alt"></i>
+    <span>Sydney:        +61 4 7890 0029</span>
+  </div>
+  <div>
+    <i class="fas fa-phone-alt"></i>
+    <span>Melbourne:     +61 3 9013 5190</span>
+  </div>
+  <div>
+    <i class="fas fa-phone-alt"></i>
+    <span>Adelaide:      +61 8 8277 7167</span>
+  </div>
+  <div>
+    <i class="fas fa-envelope"></i>
+    <span>Email: travels.greathimalayan@gmail.com</span>
+  </div>
+</div>
+    
+  </header>
+
+  <section id="home" class="hero">
+    <div class="swiper-container slideshow">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="great.jpg" alt="Nepal Image 1">
+        </div>
+        <div class="swiper-slide">
+          <img src="image7.jpg" alt="Nepal Image 1">
+        </div>
+        <div class="swiper-slide">
+          <img src="image6.jpg" alt="Nepal Image 2">
+        </div>
+        <div class="swiper-slide">
+          <img src="image3.jpg" alt="Nepal Image 3">
+        </div>
+        <div class="swiper-slide">
+          <img src="image2.jpg" alt="Nepal Image 2">
+        </div>
+        <div class="swiper-slide">
+          <img src="image1.jpg" alt="Nepal Image 2">
+        </div>
+        <div class="swiper-slide">
+          <img src="image5.jpg" alt="Nepal Image 2">
+        </div>
+        <div class="swiper-slide">
+          <img src="image4.jpg" alt="Nepal Image 2">
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+    <a href="#contact" class="cta-button">Get in Touch</a>
+  </section>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <p>Welcome to Great Himalayan Travels and Tours. We specialize in providing exceptional travel experiences in Nepal. Our team of experts is dedicated to offering personalized tours and memorable adventures in the stunning Himalayan region.</p>
+  </section>
+
+  <section id="destinations">
+    <h2>Popular Destinations</h2>
+    <div class="destination-grid">
+      <div class="destination">
+        <img src="kathmandu.jpg" alt="Kathmandu">
+        <h3>Kathmandu</h3>
+        <p>Explore the historical and cultural wonders of Kathmandu, including Swayambhunath and Boudhanath.</p>
+      </div>
+      <div class="destination">
+        <img src="pokhara.jpg" alt="Pokhara">
+        <h3>Pokhara</h3>
+        <p>Experience the beauty of Pokhara with its serene lakes and breathtaking views of the Himalayas.</p>
+      </div>
+      <div class="destination">
+        <img src="chitwan.jpg" alt="Chitwan">
+        <h3>Chitwan National Park</h3>
+        <p>Enjoy wildlife safaris and jungle adventures in Chitwan National Park.</p>
+      </div>
+      <div class="destination">
+        <img src="lumbini.jpg" alt="Lumbini">
+        <h3>Lumbini</h3>
+        <p>Visit the birthplace of Buddha and explore the spiritual significance of Lumbini.</p>
+      </div>
+      <div class="destination">
+        <img src="everest-base-camp.jpg" alt="Everest Base Camp">
+        <h3>Everest Base Camp</h3>
+        <p>Embark on a trek to Everest Base Camp and witness the majestic Himalayan views.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+  <h2>Contact Us</h2>
+  
+  <div class="contact-form">
+  <form form action="https://api.web3forms.com/submit" method="POST">
+    <input type="hidden" name="access_key" value="6d2d5c7d-d617-4ee7-a863-dd40b7200410">
+    <form id="contact-form">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" required>
+      </div>
+      <div class="form-group">
+        <label for="Email">Email:</label>
+        <input type="email" id="Email" name="Email" required>
+      </div>
+      <div class="form-group">
+        <label for="from">Travelling From:</label>
+        <input type="text" id="from" name="from" required>
+      </div>
+      <div class="form-group">
+        <label for="to">Travelling To:</label>
+        <input type="text" id="to" name="to" required>
+      </div>
+      <div class="form-group">
+        <label for="departure-date">Departure Date:</label>
+        <input type="date" id="departure-date" name="departure-date" required>
+      </div>
+      <button type="submit" class="submit-button">Submit</button>
+    </form>
+    </form>
+
+    <!-- Confirmation Message -->
+    <div id="confirmation-message">
+      <p>Thank you for contacting us. One of our available staff members will reach out to you very soon. Thank you for trusting us!</p>
+    </div>
+    </div>
+    <div class="feedback">
+      <h3>Customer Feedback</h3>
+      <p><strong>John Doe:</strong> "Great service and unforgettable experience! The Himalayan trek was fantastic."</p>
+      <p><strong>Jane Smith:</strong> "Excellent tour guides and beautiful destinations. Highly recommend this travel agency."</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-links">
+      <a href="#home">Home</a>
+      <a href="#about">About Us</a>
+      <a href="#destinations">Destinations</a>
+      <a href="#contact">Contact Us</a>
+      <a href="#reviews">Reviews</a>
+    </div>
+    <div class="social-media">
+      <a href="https://www.facebook.com/GHimalayantravels" target="_blank">Facebook</a>
+      <a href="https://www.facebook.com/GHimalayantravels" target="_blank">Twitter</a>
+      <a href="https://www.facebook.com/GHimalayantravels" target="_blank">Instagram</a>
+    </div>
+  </footer>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script>
+    const swiper = new Swiper('.swiper-container', {
+      pagination: {
+        el: '.swiper-pagination',
+      },
+      loop: true,
+      autoplay: {
+        delay: 1500,
+      },
+    });
+    // Hamburger Menu Toggle
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+
+    hamburger.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+  </script>
+  <script>
+  // JavaScript to handle form submission
+  const form = document.getElementById('contact-form');
+  const confirmationMessage = document.getElementById('confirmation-message');
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Display the confirmation message
+    confirmationMessage.style.display = 'block';
+
+    // Optionally clear the form after a brief delay
+    setTimeout(() => {
+      form.reset();
+    }, 1000);
+  });
+</script>
+</body>
+</html>
